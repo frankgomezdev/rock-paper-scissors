@@ -1,0 +1,45 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    padding: 10px 16px
+}
+
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 1400px;
+    padding: 50px 50px;
+    justify-content: center;
+}
+
+.button-container {
+    display: flex;
+    /* width: 1300px; */
+    justify-content: center;
+    gap: 30px;
+}
+
+.display-container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 50px;
+    gap: 50px;
+    /* width: 500px; */
+}
+
+.score-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.result-container {
+    text-align: center;
+}

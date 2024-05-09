@@ -1,4 +1,3 @@
-//create and initialize player score variables
 let humanScore = 0;
 let computerScore = 0;
 
@@ -32,57 +31,71 @@ function capitalize(str) {
 
 //create function that takes human and players choices as arguments, plays a single round, and increments the round winner's score and logs a winner announcement
 function playRound(humanChoice, computerChoice) {
+  let result;
   if (humanChoice === computerChoice) {
-    console.log("It's a tie!");
+      result = "draw";
+      document.querySelector("#round-result").textContent = "It's a tie!";
   } else if (
-    (humanChoice === "rock" && computerChoice === "scissors") ||
-    (humanChoice === "paper" && computerChoice === "rock") ||
-    (humanChoice === "scissors" && computerChoice === "paper")
+      (humanChoice === "rock" && computerChoice === "scissors") ||
+      (humanChoice === "paper" && computerChoice === "rock") ||
+      (humanChoice === "scissors" && computerChoice === "paper")
   ) {
-    console.log(
-      `You win! ${capitalize(humanChoice)} beats ${capitalize(
-        computerChoice
-      )}.`
-    );
-    humanScore++;
-  } else if (
-    (humanChoice === "scissors" && computerChoice === "rock") ||
-    (humanChoice === "rock" && computerChoice === "paper") ||
-    (humanChoice === "paper" && computerChoice === "scissors")
-  ) {
-    console.log(
-      `You lost! ${capitalize(computerChoice)} beats ${capitalize(
-        humanChoice
-      )}.`
-    );
-    computerScore++;
+      result = 'win';
+      document.querySelector("#round-result").textContent = `You won! ${capitalize(humanChoice)} beats ${capitalize(computerChoice)}.`;
+  } else {
+      result = 'lose';
+      document.querySelector("#round-result").textContent = `You lost! ${capitalize(computerChoice)} beats ${capitalize(humanChoice)}.`;
   }
+  return result;
 }
 
-// const humanSelection = getHumanChoice();
-// const computerSelection = getComputerChoice();
 
-// playRound(humanSelection, computerSelection);
+
+function displayResult(result) {
+  document.querySelector("#game-result").textContent = result;
+}
+
+function updateScore(humanScore, computerScore) {
+  document.querySelector("#human-score").textContent = humanScore;
+  document.querySelector("#computer-score").textContent = computerScore;
+}
+
+function checkRoundWinner() {
+
+}
+
+function checkGameWinner(humanScore, computerScore) {
+  if (humanScore === 5) {
+    displayResult("Congratulations! You won the game.");
+  } else if (computerScore === 5) {
+    displayResult("Sorry, you lost the game.");
+  }
+}
 
 function playGame() {
   //create and initialize player score variables
   let humanScore = 0;
   let computerScore = 0;
 
-  for (let i = 0; i < 5; i++) {
-    let humanChoice = getHumanChoice();
-    let computerChoice = getComputerChoice();
-
-    playRound(humanChoice, computerChoice);
+  // Helper function to handle common logic
+  function handleButtonClick(choice) {
+    let result = playRound(choice, getComputerChoice());
+    if (result === "win") humanScore++;
+    else if (result === "lose") computerScore++;
+    updateScore(humanScore, computerScore);
+    checkGameWinner(humanScore, computerScore);
   }
 
-  if (humanScore > computerScore) {
-    console.log("Congratulations! You won the game.");
-  } else if (humanScore < computerScore) {
-    console.log("Sorry, you've lost the game.");
-  } else {
-    console.log("The game is a tie!");
-  }
+  // Add event listeners to the buttons
+  document.querySelector("#rock").addEventListener("click", function () {
+    handleButtonClick("rock");
+  });
+  document.querySelector("#paper").addEventListener("click", function () {
+    handleButtonClick("paper");
+  });
+  document.querySelector("#scissors").addEventListener("click", function () {
+    handleButtonClick("scissors");
+  });
 }
 
 playGame();
